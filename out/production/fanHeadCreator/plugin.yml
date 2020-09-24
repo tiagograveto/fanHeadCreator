@@ -1,0 +1,6 @@
+name: fanHeadCreator
+main: pt.fanjoker.headcreator.HeadCreator
+version: 1.0
+author: zFan
+commands:
+  hcreator:

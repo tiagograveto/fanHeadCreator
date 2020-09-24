@@ -1,0 +1,39 @@
+Mysql:
+  enable: false
+  hostname: "localhost"
+  database: "minecraft"
+  username: "root"
+  password: "pass123"
+  port: 3306
+Messages:
+  Place: "&aVocê colocou a sua cabeça &f'%type%' &acom êxito.."
+  Break: "&cGerador retirado com êxito."
+Config:
+  UseHolograms: true # Requer o plugin HolographicDisplays
+  DisableHologram: true # Isso desabilitará o holograma caso a cabeça esteja desativada
+  OpenWithShift: true # Isso abrirá o menu da cabeça quando o jogador com a permissão "hcreator.admin" clicar com o shift no bloco
+HeadCreator:
+  lixo:
+    name: "&aLixeiro"
+    texture: "http://textures.minecraft.net/texture/94c28ffb9063e63037c7c9c3a99975333254946ddfa0018996151740a5c66842"
+    permission: "lixo.usar"
+    permission-required: true
+    use-hologram: true
+    hologram-height: 2
+    hologram:
+      - '&a&lLIXEIRA'
+      - ''
+      - '&7Despeja seu lixo aqui.'
+    commands:
+      - 'lixo'
+  vip:
+    name: "&eVip"
+    texture: "http://textures.minecraft.net/texture/9631597dce4e4051e8d5a543641966ab54fbf25a0ed6047f11e6140d88bf48f"
+    permission: ""
+    permission-required: false
+    use-hologram: false
+    hologram-height: 0
+    hologram:
+      - ''
+    commands:
+      - 'op:darvip vip %player% 1'
