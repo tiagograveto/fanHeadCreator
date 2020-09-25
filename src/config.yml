@@ -16,7 +16,7 @@ HeadCreator:
   lixo:
     name: "&aLixeiro"
     texture: "http://textures.minecraft.net/texture/94c28ffb9063e63037c7c9c3a99975333254946ddfa0018996151740a5c66842"
-    permission: "lixo.usar"
+    permission: ""
     permission-required: true
     use-hologram: true
     hologram-height: 2
@@ -29,11 +29,8 @@ HeadCreator:
   vip:
     name: "&eVip"
     texture: "http://textures.minecraft.net/texture/9631597dce4e4051e8d5a543641966ab54fbf25a0ed6047f11e6140d88bf48f"
-    permission: ""
-    permission-required: false
+    permission: "vip.ativar"
+    permission-required: true
     use-hologram: false
-    hologram-height: 0
-    hologram:
-      - ''
     commands:
       - 'op:darvip vip %player% 1'
