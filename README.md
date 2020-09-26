@@ -8,3 +8,6 @@ O plugin conta com:
 * A maior tecnologia de otimização de código e de plugin;
 * O plugin ser 100% configurável, ao seu gosto.
 
+Aqui está umas fotos de umas possíveis cabeças customisáveis:
+
+<img src= "https://i.imgur.com/7bLDxug.png">
