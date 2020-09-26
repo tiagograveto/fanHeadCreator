@@ -10,4 +10,4 @@ O plugin conta com:
 
 Aqui está umas fotos de umas possíveis cabeças customisáveis:
 
-<img src= "https://i.imgur.com/7bLDxug.png">
+<img src= "https://i.imgur.com/zY7Q6mn.png">
