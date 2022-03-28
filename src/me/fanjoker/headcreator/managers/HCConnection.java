@@ -1,7 +1,6 @@
 package me.fanjoker.headcreator.managers;
 
 import me.fanjoker.headcreator.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -15,19 +14,30 @@ public class HCConnection {
     private static Connection con = null;
     private String prefix = "HeadCreator";
 
+    private Main main;
+
+    public HCConnection(Main main) {
+        this.main = main;
+    }
+
+    public Connection getConnection()
+    {
+        return con;
+    }
+
     private void createTables() {
         table1();
     }
     private void table1() {
-        PreparedStatement stm = null;
-        try {
-            PreparedStatement localPreparedStatement = con.prepareStatement("CREATE TABLE IF NOT EXISTS `HeadCreator`(" +
-                    "`Id` INTEGER PRIMARY KEY, `location` TEXT, `toggle` TEXT, `type` TEXT)");
-            localPreparedStatement.executeUpdate();
+        try (PreparedStatement stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS `" + prefix + "`(" +
+                "`Id` INTEGER PRIMARY KEY, `location` TEXT, `toggle` TEXT, `type` TEXT)")) {
+
+            stm.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage("§6Não foi possível criar a tabela §f`" + prefix +"`");
-            Main.getInstance().getPluginLoader().disablePlugin(Main.getInstance());
+            main.log("&6Não foi possível criar a tabela &f" + prefix);
+
         }
     }
 
@@ -47,15 +57,15 @@ public class HCConnection {
             try {
                 con = DriverManager.getConnection(URL, username, password);
                 createTables();
-                Bukkit.getConsoleSender().sendMessage("§c[" + prefix + "] §fConexão com o §fMySQL §afoi aberta!");
+                main.log("&fConexão com o &fMySQL &afoi aberta!");
             } catch (SQLException e) {
                 e.printStackTrace();
-                Bukkit.getConsoleSender().sendMessage("§aConexão com o §fMySQL §afalhou, alterando modo para §fSQLITE!");
+                main.log("&aConexão com o §fMySQL &afalhou, alterando modo para &fSQLITE!");
             }
+            return;
 
-        } else {
-            openConnectionSQLite();
         }
+        openConnectionSQLite();
     }
     private void openConnectionSQLite() {
         File file = new File(Main.getInstance().getDataFolder(), "database.db");
@@ -66,11 +76,10 @@ public class HCConnection {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection(URL);
             createTables();
-            Bukkit.getConsoleSender().sendMessage("§c[" + prefix +"] §fConexao com o SQLite foi aberta!");
+            main.log("&fConexão com o SQLite foi aberta!");
         } catch (Exception e) {
             e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage("§aConexão com o §fSQLite §afalhou, desabilitando o plugin");
-            Main.getInstance().getPluginLoader().disablePlugin(Main.getInstance());
+            main.log("&aConexão com o SQLite falhou, desabilitando o plugin");
         }
     }
 
@@ -79,15 +88,12 @@ public class HCConnection {
             try {
                 con.close();
                 con = null;
-                Bukkit.getConsoleSender().sendMessage("§c[" + prefix + "] §fConexao com o banco de dados foi fechada!");
+                main.log("&fConexão com o banco de dados foi fechada!");
             } catch (SQLException e) {
-                Bukkit.getConsoleSender().sendMessage("§cNão foi possível fechar a conexão.");
+                e.printStackTrace();
+                main.log("&fNão foi possível fechar a conexão com o banco de dados.");
             }
         }
-    }
-    public Connection getConnection()
-    {
-        return con;
     }
 
 }

@@ -23,14 +23,14 @@ public class InteractEvent implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent e) {
 
-        Block block = e.getClickedBlock();
-        if (block.getType() != Material.SKULL) return;
+        Block b = e.getClickedBlock();
+        Player p = e.getPlayer();
+
+        if (b.getType() != Material.SKULL) return;
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-        HCBlock hcBlock = main.getConstructor().getByLocation(block.getLocation());
+        HCBlock hcBlock = main.getConstructor().getByLocation(b.getLocation());
         if (hcBlock == null) return;
-
-        Player p = e.getPlayer();
 
         if (p.isSneaking() && p.hasPermission("hcreator.admin") && main.getSettings().isOpenWithShift()) {
             main.getInventories().getHeadGUI().open(p, main.getConstructor().getIdByLocation(hcBlock.getLoc()));

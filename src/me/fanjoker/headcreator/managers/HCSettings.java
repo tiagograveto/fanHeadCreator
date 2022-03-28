@@ -34,7 +34,7 @@ public class HCSettings {
         return Main.config.getConfig("config").getYaml();
     }
 
-    private String colorText(String str) { return ChatColor.translateAlternateColorCodes('&', str); }
+    public String colorText(String str) { return ChatColor.translateAlternateColorCodes('&', str); }
 
     public void loadHeadConfigs() {
 
@@ -141,12 +141,19 @@ public class HCSettings {
 
         }
     }
-    public void reloadHolograms() {
-        HologramsAPI.getHolograms(main).forEach(Hologram::delete);
-        for (HCBlock hcBlock : main.getConstructor().getMap().values()) {
-            if (!hcBlock.getConfig().usesHologram()) continue;
-            createHologram(hcBlock);
+    public boolean reloadHolograms() {
+        try {
+            HologramsAPI.getHolograms(main).forEach(Hologram::delete);
+            for (HCBlock hcBlock : main.getConstructor().getMap().values()) {
+                if (hcBlock.getConfig().usesHologram())
+                    createHologram(hcBlock);
 
+            }
+            return true;
+
+        } catch (Exception e) {
+            main.error("&cAconteceu um erro ao recarregar os hologramas, tente reiniciar o servidor.");
+            return false;
         }
 
     }

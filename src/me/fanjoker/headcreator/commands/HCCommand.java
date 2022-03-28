@@ -64,7 +64,7 @@ public class HCCommand implements CommandExecutor {
             TextComponent git = new TextComponent("§6§lCLIQUE AQUI");
 
             git.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§eClique para abrir a change-log").create()));
-            git.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/fan-Joker/fanHeadCreator/releases/"));
+            git.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/tgraveto/fanHeadCreator/releases/"));
 
             p.spigot().sendMessage(new TextComponent[] { project, git });
 
@@ -74,9 +74,9 @@ public class HCCommand implements CommandExecutor {
 
 
         if (args[0].equalsIgnoreCase("reload")) {
-            p.sendMessage("§aArquivo §f'config.yml' §arecarregado com êxito.");
             Main.config.getConfig("config").reload();
-            if (Main.config.getConfig("config").getYaml().getBoolean("Config.UseHolograms")) {
+            p.sendMessage("§aArquivo §f'config.yml' §arecarregado com êxito.");
+            if (main.getCfg().getBoolean("Config.UseHolograms")) {
                 main.getSettings().reloadHolograms();
                 p.sendMessage("§aHologramas recarregados com êxito.");
             }

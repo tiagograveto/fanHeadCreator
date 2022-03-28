@@ -27,22 +27,13 @@ public class HCConfig {
     public String getType() {
         return type;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public ItemStack getItemStack() {
         return itemStack;
     }
-    public void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
 
     public String getPermission() {
         return permission;
-    }
-    public void setPermission(String permission) {
-        this.permission = permission;
     }
     public boolean hasPermission() {
         return this.permission != null;
@@ -51,22 +42,12 @@ public class HCConfig {
     public List<String> getHologram() {
         return hologram;
     }
-    public void setHologram(List<String> hologram) {
-        this.hologram = hologram;
-    }
-
-    public List<String> getCommands() {
-        return commands;
-    }
-    public void setCommands(List<String> commands) {
-        this.commands = commands;
+    public boolean usesHologram() {
+        return hologram != null;
     }
 
     public int getHeight() {
         return height;
-    }
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public void executeCommands(Player p) {
@@ -82,9 +63,5 @@ public class HCConfig {
             p.chat("/" + str);
         }
 
-    }
-
-    public boolean usesHologram() {
-        return hologram != null;
     }
 }

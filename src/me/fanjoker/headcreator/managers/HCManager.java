@@ -29,8 +29,8 @@ public class HCManager {
 //    SQL ACTIONS
 //
 
-    final String createQuery = "INSERT INTO `HeadCreator` (`location`, `type`, `toggle`) VALUES(?,?,?)";
     public void create(Location location, String type) {
+        final String createQuery = "INSERT INTO `HeadCreator` (`location`, `type`, `toggle`) VALUES(?,?,?)";
 
         try (PreparedStatement stm = getConnection().prepareStatement(createQuery)) {
             stm.setString(1, serialize(location));
@@ -45,8 +45,8 @@ public class HCManager {
         main.getConstructor().getMap().put(getSQLId(location), block);
     }
 
-    final String loadQuery = "SELECT * FROM `HeadCreator`";
     public void loadHeadDatabase() {
+        final String loadQuery = "SELECT * FROM `HeadCreator`";
 
         try(PreparedStatement stm = getConnection().prepareStatement(loadQuery)) {
             ResultSet rs = stm.executeQuery();
@@ -58,9 +58,9 @@ public class HCManager {
 
                 if (hcConfig == null) {
                     main.log("");
-                    main.log("§cOcorreu um erro ao recarregar a cabeça na localização: " + serialize(loc));
-                    main.log("§cParece que não foi encontrado nenhum tipo dela, na configuração.");
-                    main.log("§cDeletando a mesma...");
+                    main.error("§cOcorreu um erro ao recarregar a cabeça na localização: " + serialize(loc));
+                    main.error("§cParece que não foi encontrado nenhum tipo dela, na configuração.");
+                    main.error("§cDeletando a mesma...");
                     main.log("");
 
                     deleteHead(loc);
@@ -74,11 +74,10 @@ public class HCManager {
             e.printStackTrace();
         }
     }
-
-    final String deleteQuery = "DELETE FROM `HeadCreator` WHERE `id` = ?";
     public void deleteHead(Location loc) {
-        loc.getBlock().setType(Material.AIR);
+        final String deleteQuery = "DELETE FROM `HeadCreator` WHERE `id` = ?";
 
+        loc.getBlock().setType(Material.AIR);
         int id = getSQLId(loc);
 
         try (PreparedStatement stm = getConnection().prepareStatement(deleteQuery)) {
@@ -92,15 +91,14 @@ public class HCManager {
 
     }
 
-    final String idQuery = "SELECT `id` FROM `HeadCreator` WHERE `location` = ?";
     public int getSQLId(Location loc) {
+        final String idQuery = "SELECT `id` FROM `HeadCreator` WHERE `location` = ?";
+
         try (PreparedStatement stm = getConnection().prepareStatement(idQuery)) {
             stm.setString(1, serialize(loc));
-            ResultSet rs = stm.executeQuery();
-
-            if (rs.next())
-                return rs.getInt("id");
-            rs.close();
+            try(ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) return rs.getInt("id");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,10 +133,6 @@ public class HCManager {
     }
 
     public void saveHeadDatabase() {
-
         main.getConstructor().getMap().keySet().forEach(this::saveHead);
-//        for (int id : main.getConstructor().getMap().keySet()) {
-//            saveHead(id);
-//        }
     }
 }

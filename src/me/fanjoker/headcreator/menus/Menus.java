@@ -2,22 +2,22 @@ package me.fanjoker.headcreator.menus;
 
 import me.fanjoker.headcreator.Main;
 
-public class Inventories {
+public class Menus {
 
     private Main main;
-    private MenuGUI menuGUI;
+    private PanelGUI menuGUI;
     private HeadGUI headGUI;
 
-    public Inventories(Main main) {
+    public Menus(Main main) {
         this.main = main;
-        menuGUI = new MenuGUI(main);
+        menuGUI = new PanelGUI(main);
         headGUI = new HeadGUI(main);
     }
 
     public HeadGUI getHeadGUI() {
         return headGUI;
     }
-    public MenuGUI getMenuGUI() {
+    public PanelGUI getMenuGUI() {
         return menuGUI;
     }
 }

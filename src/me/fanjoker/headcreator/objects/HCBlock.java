@@ -39,4 +39,12 @@ public class HCBlock {
         this.toggle = toggle;
     }
 
+    public void teleport(Player p) {
+        Location loc = this.loc.clone();
+        loc.add(0.5, 0.5, 0.5);
+        loc.setPitch(p.getLocation().getPitch());
+        loc.setYaw(p.getLocation().getYaw());
+        p.teleport(loc);
+    }
+
 }

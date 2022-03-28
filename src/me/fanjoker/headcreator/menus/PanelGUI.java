@@ -13,11 +13,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuGUI implements Listener {
+public class PanelGUI implements Listener {
     
     private Main main;
 
-    public MenuGUI(Main main) {
+    public PanelGUI(Main main) {
         this.main = main;
         main.getServer().getPluginManager().registerEvents(this, main);
     }

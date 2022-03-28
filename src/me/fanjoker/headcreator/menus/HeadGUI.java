@@ -60,8 +60,7 @@ public class HeadGUI implements Listener {
             if (e.getCurrentItem() == null) return;
 
             if (e.getSlot() == 11) {
-                Location loc = hcBlock.getLoc().clone();loc.add(0.5, 0.5, 0.5);loc.setPitch(90);
-                p.teleport(loc);
+                hcBlock.teleport(p);
                 p.sendMessage("§aTeleportado com êxito.");
                 p.closeInventory();
             }

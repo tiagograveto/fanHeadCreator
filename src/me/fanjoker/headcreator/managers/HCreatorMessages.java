@@ -1,4 +1,4 @@
 package me.fanjoker.headcreator.managers;
 
-public class HeadCreatorMessages {
+public class HCreatorMessages {
 }

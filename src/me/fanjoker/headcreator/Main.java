@@ -3,11 +3,11 @@ package me.fanjoker.headcreator;
 import me.fanjoker.headcreator.commands.HCCommand;
 import me.fanjoker.headcreator.config.ConfigManager;
 import me.fanjoker.headcreator.managers.*;
-import me.fanjoker.headcreator.menus.Inventories;
+import me.fanjoker.headcreator.menus.Menus;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import me.fanjoker.headcreator.listener.BreakEvent;
 import me.fanjoker.headcreator.listener.InteractEvent;
 import me.fanjoker.headcreator.listener.PlaceEvent;
@@ -15,14 +15,14 @@ import me.fanjoker.headcreator.listener.PlaceEvent;
 public class Main extends JavaPlugin {
 
     private static Main instance;
-    private static HeadCreatorMessages messages;
+    private static HCreatorMessages messages;
     public static ConfigManager config;
 
     private HCManager manager;
     private HCSettings settings;
     private HCConstructor constructor;
     private HCConnection connection;
-    private Inventories inventories;
+    private Menus inventories;
 
     public HCConstructor getConstructor() {
         return constructor;
@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
     public HCConnection getConnection() {
         return connection;
     }
-    public Inventories getInventories() {
+    public Menus getInventories() {
         return inventories;
     }
 
@@ -70,42 +70,55 @@ public class Main extends JavaPlugin {
 //    ALL MANAGERS
 
     public static Main getInstance() { return instance; }
-    public static HeadCreatorMessages getMessages() { return messages; }
+    public static HCreatorMessages getMessages() { return messages; }
 
 //    REGISTER MANAGERS
 
     private void registerManagers() {
         instance = this;
-        messages = new HeadCreatorMessages();
+        messages = new HCreatorMessages();
         constructor = new HCConstructor(this);
         settings = new HCSettings(this);
         manager = new HCManager(this);
-        connection = new HCConnection();
+        connection = new HCConnection(this);
         config = new ConfigManager();
-        inventories = new Inventories(this);
+        inventories = new Menus(this);
+    }
+
+    public YamlConfiguration getCfg() {
+        return config.getConfig("config").getYaml();
+    }
+
+    private String colortext(String str) {
+        return settings.colorText(str);
     }
 
     public void log(String str) {
-        getServer().getConsoleSender().sendMessage(str);
+        getServer().getConsoleSender().sendMessage(colortext("&c[HeadCreator] " + str));
+    }
+
+    public void error(String error) {
+        getServer().getConsoleSender().sendMessage(colortext("&c&l[ERROR] " + error));
     }
 
     private void reloadHolograms() {
         Bukkit.getScheduler().runTaskLater(this, () -> {
             if (settings.useHolograms()) {
-                log("§c[HeadCreator] §fRecebido hook de HolographicDisplays");
+                log("&fRecebido hook de HolographicDisplays");
 
                 if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
-                    log("§c[HeadCreator] §fPlugin HolographicDisplays encontrado");
-                    log("§c[HeadCreator] §fRecarregando hologramas...");
+                    log("&fPlugin HolographicDisplays encontrado");
+                    log("&fRecarregando hologramas...");
                     long start = System.nanoTime();
-                    settings.reloadHolograms();
-                    long elapsedTime = System.nanoTime() - start;
-                    log("§c[HeadCreator] §fHologramas carregados com sucesso. (" + elapsedTime / 1000000 + "ms)");
+                    if (settings.reloadHolograms()) {
+                        long elapsedTime = System.nanoTime() - start;
+                        log("&fHologramas carregados com sucesso. (" + elapsedTime / 1000000 + "ms)");
+                    }
                     return;
 
                 }
-                log("§c[HeadCreator] §fNão foi encontrado nenhum HolographicDisplays");
-                log("§c[HeadCreator] §fDesativando função...");
+                log("&fNão foi encontrado nenhum HolographicDisplays");
+                log("&fDesativando função...");
                 config.getConfig("config").getYaml().set("Config.UseHolograms", false);
                 config.getConfig("config").save();
             }
