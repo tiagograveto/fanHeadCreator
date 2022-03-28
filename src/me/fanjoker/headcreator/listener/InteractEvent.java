@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class InteractEvent implements Listener {
@@ -24,6 +25,7 @@ public class InteractEvent implements Listener {
 
         Block block = e.getClickedBlock();
         if (block.getType() != Material.SKULL) return;
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         HCBlock hcBlock = main.getConstructor().getByLocation(block.getLocation());
         if (hcBlock == null) return;
@@ -32,6 +34,7 @@ public class InteractEvent implements Listener {
 
         if (p.isSneaking() && p.hasPermission("hcreator.admin") && main.getSettings().isOpenWithShift()) {
             main.getInventories().getHeadGUI().open(p, main.getConstructor().getIdByLocation(hcBlock.getLoc()));
+            return;
         }
 
         if (!hcBlock.isToggle()) return;

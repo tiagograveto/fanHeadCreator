@@ -23,17 +23,14 @@ public class ScrollerInventory implements Listener {
         this.id = UUID.randomUUID();
         Inventory page = getBlankPage(name);
         int j = 0;
-        for (int i = 0; i < items.size(); i++) {
+        for (ItemStack item : items) {
             if (page.firstEmpty() == -1) {
                 pages.add(page);
                 page = getBlankPage(name);
-                page.addItem(items.get(i));
-            } else {
-                page.addItem(items.get(i));
             }
+            page.addItem(item);
         }
         pages.add(page);
-
 
         p.openInventory(pages.get(currpage));
         users.put(p, this);

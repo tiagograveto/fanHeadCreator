@@ -76,8 +76,7 @@ public class HCCommand implements CommandExecutor {
         if (args[0].equalsIgnoreCase("reload")) {
             p.sendMessage("§aArquivo §f'config.yml' §arecarregado com êxito.");
             Main.config.getConfig("config").reload();
-            if (Main.config.getConfig("config").getYaml().getBoolean("Config.UseHolograms")
-                    && Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
+            if (Main.config.getConfig("config").getYaml().getBoolean("Config.UseHolograms")) {
                 main.getSettings().reloadHolograms();
                 p.sendMessage("§aHologramas recarregados com êxito.");
             }

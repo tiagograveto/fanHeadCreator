@@ -63,7 +63,6 @@ public class HCManager {
                     main.log("§cDeletando a mesma...");
                     main.log("");
 
-                    loc.getBlock().setType(Material.AIR);
                     deleteHead(loc);
                 } else {
                     HCBlock hcBlock = new HCBlock(loc, hcConfig, rs.getBoolean("toggle"));
@@ -93,17 +92,16 @@ public class HCManager {
 
     }
 
+    final String idQuery = "SELECT `id` FROM `HeadCreator` WHERE `location` = ?";
     public int getSQLId(Location loc) {
-        try {
-            PreparedStatement stm;
-            stm = getConnection().prepareStatement("SELECT `id` FROM `HeadCreator` WHERE `location` = ?");
+        try (PreparedStatement stm = getConnection().prepareStatement(idQuery)) {
             stm.setString(1, serialize(loc));
             ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
+
+            if (rs.next())
                 return rs.getInt("id");
-            }
             rs.close();
-            stm.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,13 +132,13 @@ public class HCManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        main.getConstructor().getMap().clear();
     }
 
     public void saveHeadDatabase() {
 
-        for (int id : main.getConstructor().getMap().keySet()) {
-            saveHead(id);
-        }
+        main.getConstructor().getMap().keySet().forEach(this::saveHead);
+//        for (int id : main.getConstructor().getMap().keySet()) {
+//            saveHead(id);
+//        }
     }
 }
