@@ -34,7 +34,7 @@ public class BreakEvent implements Listener {
         if (hcBlock == null) return;
 
         main.getManager().deleteHead(hcBlock.getLoc());
-        main.getServer().getPluginManager().callEvent(new BreakHeadEvent(hcBlock));
+        main.getServer().getPluginManager().callEvent(new BreakHeadEvent(e.getPlayer(), hcBlock));
         e.getPlayer().sendMessage(Messages.BREAK_HEAD);
     }
 }

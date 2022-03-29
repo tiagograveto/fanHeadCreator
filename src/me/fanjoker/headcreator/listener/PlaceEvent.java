@@ -32,7 +32,7 @@ public class PlaceEvent implements Listener {
         String type = hcConfig.getType();
         main.getManager().create(loc, type);
         e.getPlayer().sendMessage(Messages.PLACED_HEAD);
-        main.getServer().getPluginManager().callEvent(new PlaceHeadEvent(hcConfig));
+        main.getServer().getPluginManager().callEvent(new PlaceHeadEvent(e.getPlayer(), hcConfig));
 
         main.getSettings().createHologram(main.getConstructor().getByLocation(loc));
 

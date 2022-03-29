@@ -34,7 +34,7 @@ public class InteractEvent implements Listener {
         HCBlock hcBlock = main.getConstructor().getByLocation(b.getLocation());
         if (hcBlock == null) return;
 
-        main.getServer().getPluginManager().callEvent(new InteractHeadEvent(hcBlock));
+        main.getServer().getPluginManager().callEvent(new InteractHeadEvent(p, hcBlock));
 
         if (p.isSneaking() && p.hasPermission(Config.PERMISSION) && Config.OPEN_WITH_SHIFT) {
             main.getInventories().getHeadGUI().open(p, main.getConstructor().getIdByLocation(hcBlock.getLoc()));
