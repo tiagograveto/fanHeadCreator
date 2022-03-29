@@ -1,0 +1,23 @@
+
+# PlaceHolders
+#  %target% = Nome do jogador
+#  %type% = Tipo da headcreator
+
+
+ONLY_PLAYERS: "&cApenas jogadores in-game, podem executar esse comando."
+NO_PERMISSION: "&cVocê não tem permissão para executar esse comando."
+COMMAND_INFO:
+  - ''
+  - ' &e&lHeadCreator: &7Criação de cabeças'
+  - ''
+  - '  &e/hcreator info'
+  - '  &e/hcreator give <player> <tipo>'
+  - '  &e/hcreator menu'
+  - '  &e/hcreator reload'
+  - ''
+RELOAD_FILE: "&aArquivo §f'%file%' §arecarregado com êxito."
+RELOAD_HOLOGRAMS: "&aHologramas recarregados com êxito."
+PLAYER_OFFLINE: "&cEsse jogador &f'%target%' &cnão se encontra online."
+TYPE_NOT_FOUND: "&cO tipo &f'%type' &cnão foi encontrado na configuração."
+PLACED_HEAD: "&aVocê colocou a cabeça &f'%type' &acom êxito.."
+BREAK_HEAD: "&cCabeça retirada com êxito."

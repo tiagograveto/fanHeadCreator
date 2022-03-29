@@ -1,11 +1,12 @@
 package me.fanjoker.headcreator;
 
 import me.fanjoker.headcreator.commands.HCCommand;
+import me.fanjoker.headcreator.config.Config;
 import me.fanjoker.headcreator.config.ConfigManager;
 import me.fanjoker.headcreator.managers.*;
 import me.fanjoker.headcreator.menus.Menus;
+import me.fanjoker.headcreator.config.Messages;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.fanjoker.headcreator.listener.BreakEvent;
@@ -15,7 +16,6 @@ import me.fanjoker.headcreator.listener.PlaceEvent;
 public class Main extends JavaPlugin {
 
     private static Main instance;
-    private static HCreatorMessages messages;
     public static ConfigManager config;
 
     private HCManager manager;
@@ -42,6 +42,7 @@ public class Main extends JavaPlugin {
         registerManagers();
 
         config.loadConfig("config");
+        config.loadConfig("messages");
         connection.openConnectionMySQL();
 
         settings.loadHeadConfigs();
@@ -62,6 +63,9 @@ public class Main extends JavaPlugin {
     private void registerAll() {
         new HCCommand(this);
 
+        new Config();
+        new Messages();
+
         new BreakEvent(this);
         new PlaceEvent(this);
         new InteractEvent(this);
@@ -70,13 +74,11 @@ public class Main extends JavaPlugin {
 //    ALL MANAGERS
 
     public static Main getInstance() { return instance; }
-    public static HCreatorMessages getMessages() { return messages; }
 
 //    REGISTER MANAGERS
 
     private void registerManagers() {
         instance = this;
-        messages = new HCreatorMessages();
         constructor = new HCConstructor(this);
         settings = new HCSettings(this);
         manager = new HCManager(this);
@@ -88,6 +90,7 @@ public class Main extends JavaPlugin {
     public YamlConfiguration getCfg() {
         return config.getConfig("config").getYaml();
     }
+    public YamlConfiguration getMsg() { return config.getConfig("messages").getYaml(); }
 
     private String colortext(String str) {
         return settings.colorText(str);
@@ -103,7 +106,7 @@ public class Main extends JavaPlugin {
 
     private void reloadHolograms() {
         Bukkit.getScheduler().runTaskLater(this, () -> {
-            if (settings.useHolograms()) {
+            if (Config.USE_HOLOGRAMS) {
                 log("&fRecebido hook de HolographicDisplays");
 
                 if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {

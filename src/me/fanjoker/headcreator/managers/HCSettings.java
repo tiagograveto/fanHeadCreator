@@ -59,18 +59,6 @@ public class HCSettings {
 
 //    SETTINGS
 
-    public boolean isOpenWithShift() {
-        return getConfig().getBoolean("Config.OpenWithShift");
-    }
-
-    public boolean isDisableHologram() {
-        return getConfig().getBoolean("Config.DisableHologram");
-    }
-
-    public boolean useHolograms() {
-        return getConfig().getBoolean("Config.UseHolograms");
-    }
-
     public HCConfig getHeadByItem(ItemStack itemInHand) {
         if (!itemInHand.hasItemMeta()) return null;
 
@@ -82,12 +70,6 @@ public class HCSettings {
         }
         return null;
     }
-
-//    public boolean needsHologram(String type) {
-//        return getConfig().getBoolean("HeadCreator." + type + ".use-hologram");
-//    }
-
-//    HEAD CONFIG
 
     public boolean existsType(String type) {
         return getType(type) != null;

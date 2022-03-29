@@ -1,6 +1,7 @@
 package me.fanjoker.headcreator.menus;
 
 import me.fanjoker.headcreator.Main;
+import me.fanjoker.headcreator.config.Config;
 import me.fanjoker.headcreator.objects.HCBlock;
 import me.fanjoker.headcreator.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -70,7 +71,7 @@ public class HeadGUI implements Listener {
                 hcBlock.setToggle(!hcBlock.isToggle());
                 open(p, id);
 
-                if(main.getSettings().isDisableHologram())
+                if(Config.DISABLE_HOLOGRAM)
                     main.getSettings().reloadHolograms();
 
             }

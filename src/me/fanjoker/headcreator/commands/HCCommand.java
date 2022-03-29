@@ -1,6 +1,8 @@
 package me.fanjoker.headcreator.commands;
 
 import me.fanjoker.headcreator.Main;
+import me.fanjoker.headcreator.config.Config;
+import me.fanjoker.headcreator.config.Messages;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -10,9 +12,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import javax.xml.soap.Text;
-import java.util.Arrays;
 
 public class HCCommand implements CommandExecutor {
 
@@ -27,27 +26,19 @@ public class HCCommand implements CommandExecutor {
     public boolean onCommand(CommandSender s, Command cmd, String l, String[] args) {
 
         if (!(s instanceof Player)) {
-            s.sendMessage("§cApenas jogadores in-game, podem executar esse comando.");
+            s.sendMessage(Messages.ONLY_PLAYERS);
             return true;
         }
 
-        if (!s.hasPermission("hcreator.admin")) {
-            s.sendMessage("§cVocê não tem permissão para executar esse comando.");
+        if (!s.hasPermission(Config.PERMISSION)) {
+            s.sendMessage(Messages.NO_PERMISSION);
             return true;
         }
 
         Player p = (Player) s;
 
         if (args.length == 0) {
-            p.sendMessage(new String[]{
-                    "",
-                    " §e§lHeadCreator: §7Criação de cabeças",
-                    "",
-                    "  §e/hcreator info",
-                    "  §e/hcreator give <player> <tipo>",
-                    "  §e/hcreator menu",
-                    "  §e/hcreator reload",
-                    ""});
+            p.sendMessage(Messages.COMMAND_INFO);
             return true;
         }
 
@@ -74,11 +65,15 @@ public class HCCommand implements CommandExecutor {
 
 
         if (args[0].equalsIgnoreCase("reload")) {
-            Main.config.getConfig("config").reload();
-            p.sendMessage("§aArquivo §f'config.yml' §arecarregado com êxito.");
-            if (main.getCfg().getBoolean("Config.UseHolograms")) {
+
+            for (String str : Main.config.getConfigs().keySet()) {
+                p.sendMessage(Messages.RELOAD_FILE.replace("%file%", str + ".yml"));
+                Main.config.getConfig(str).reload();
+            }
+
+            if (Config.USE_HOLOGRAMS) {
                 main.getSettings().reloadHolograms();
-                p.sendMessage("§aHologramas recarregados com êxito.");
+                p.sendMessage(Messages.RELOAD_HOLOGRAMS);
             }
 
         }
@@ -94,12 +89,12 @@ public class HCCommand implements CommandExecutor {
             String type = args[2];
 
             if (target == null) {
-                p.sendMessage("§cO jogador §f'" + args[1] + "' §cse encontra offline no momento.");
+                p.sendMessage(Messages.ONLY_PLAYERS.replace("%target%", args[1]));
                 return true;
             }
 
             if (!main.getSettings().existsType(type)) {
-                p.sendMessage("§cO tipo §f'" + args[2] + "' §cnão foi encontrado na configuração.");
+                p.sendMessage(Messages.TYPE_NOT_FOUND.replace("%type%", args[2]));
                 return true;
             }
             main.getSettings().giveHead(target, main.getSettings().getType(type));
