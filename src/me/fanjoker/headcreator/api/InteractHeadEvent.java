@@ -2,13 +2,15 @@ package me.fanjoker.headcreator.api;
 
 import me.fanjoker.headcreator.objects.HCBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class InteractHeadEvent extends Event {
+public class InteractHeadEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
 
+    private boolean isCancelled;
     private HCBlock hcBlock;
     private Player player;
 
@@ -26,6 +28,16 @@ public class InteractHeadEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return null;
+        return handlers;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean b) {
+        this.isCancelled = b;
     }
 }

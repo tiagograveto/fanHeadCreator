@@ -11,10 +11,9 @@ import java.util.stream.Collectors;
 
 public class HCConstructor {
 
-    private Main main;
 
-    public HCConstructor(Main main) {
-        this.main = main;
+    public HCConstructor() {
+
     }
 
     private Map<Integer, HCBlock> map = new LinkedHashMap<>();

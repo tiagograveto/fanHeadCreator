@@ -18,6 +18,6 @@ COMMAND_INFO:
 RELOAD_FILE: "&aArquivo §f'%file%' §arecarregado com êxito."
 RELOAD_HOLOGRAMS: "&aHologramas recarregados com êxito."
 PLAYER_OFFLINE: "&cEsse jogador &f'%target%' &cnão se encontra online."
-TYPE_NOT_FOUND: "&cO tipo &f'%type' &cnão foi encontrado na configuração."
-PLACED_HEAD: "&aVocê colocou a cabeça &f'%type' &acom êxito.."
+TYPE_NOT_FOUND: "&cO tipo &f'%type%' &cnão foi encontrado na configuração."
+PLACED_HEAD: "&aVocê colocou a cabeça &f'%type%' &acom êxito.."
 BREAK_HEAD: "&cCabeça retirada com êxito."

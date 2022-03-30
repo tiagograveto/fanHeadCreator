@@ -29,19 +29,19 @@ public class HCManager {
 //    SQL ACTIONS
 //
 
-    public void create(Location location, String type) {
+    public void createHead(Location location, HCConfig hcConfig) {
         final String createQuery = "INSERT INTO `HeadCreator` (`location`, `type`, `toggle`) VALUES(?,?,?)";
 
         try (PreparedStatement stm = getConnection().prepareStatement(createQuery)) {
             stm.setString(1, serialize(location));
-            stm.setString(2, type);
+            stm.setString(2, hcConfig.getType());
             stm.setBoolean(3, true);
             stm.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        HCBlock block = new HCBlock(location, main.getSettings().getType(type),true);
+        HCBlock block = new HCBlock(location, hcConfig,true);
         main.getConstructor().getMap().put(getSQLId(location), block);
     }
 
@@ -57,14 +57,24 @@ public class HCManager {
                 HCConfig hcConfig = main.getSettings().getType(rs.getString("type"));
 
                 if (hcConfig == null) {
-                    main.log("");
+                    main.error("");
                     main.error("§cOcorreu um erro ao recarregar a cabeça na localização: " + serialize(loc));
                     main.error("§cParece que não foi encontrado nenhum tipo dela, na configuração.");
                     main.error("§cDeletando a mesma...");
-                    main.log("");
+                    main.error("");
 
                     deleteHead(loc);
-                } else {
+                }
+                else if (!loc.getBlock().getType().equals(Material.SKULL)) {
+                    main.error("");
+                    main.error("§cOcorreu um erro ao recarregar a cabeça na localização: " + serialize(loc));
+                    main.error("§cParece que a cabeça não foi encontrada como bloco no mundo overworld.");
+                    main.error("§cDeletando a mesma...");
+                    main.error("");
+
+                    deleteHead(loc);
+                }
+                else {
                     HCBlock hcBlock = new HCBlock(loc, hcConfig, rs.getBoolean("toggle"));
                     main.getConstructor().getMap().put(rs.getInt("id"), hcBlock);
                 }
@@ -88,6 +98,7 @@ public class HCManager {
         }
 
         main.getConstructor().getMap().remove(id);
+        main.getSettings().reloadHolograms();
 
     }
 
@@ -96,8 +107,8 @@ public class HCManager {
 
         try (PreparedStatement stm = getConnection().prepareStatement(idQuery)) {
             stm.setString(1, serialize(loc));
-            try(ResultSet rs = stm.executeQuery()) {
-                if (rs.next()) return rs.getInt("id");
+            try (ResultSet rs = stm.executeQuery()) {
+                return rs.next() ? rs.getInt("id") : 0;
             }
 
         } catch (SQLException e) {
@@ -107,8 +118,8 @@ public class HCManager {
     }
 
 
-    private String serialize (Location locations) {
-        return locations.getWorld().getName() + ";" + locations.getX() + ";" + locations.getY() + ";" + locations.getZ();
+    private String serialize (Location location) {
+        return location.getWorld().getName() + ";" + location.getX() + ";" + location.getY() + ";" + location.getZ();
     }
 
     private Location deserialize (String serialized) {
@@ -118,10 +129,11 @@ public class HCManager {
     }
 
 
-    final String saveQuery = "UPDATE `HeadCreator` SET `toggle` = ? WHERE id = ?";
     private void saveHead(int id) {
+        final String saveQuery = "UPDATE `HeadCreator` SET `toggle` = ? WHERE id = ?";
+
         HCBlock hcBlock = main.getConstructor().getMap().get(id);
-        try(PreparedStatement stm = getConnection().prepareStatement(saveQuery)) {
+        try (PreparedStatement stm = getConnection().prepareStatement(saveQuery)) {
 
             stm.setBoolean(1, hcBlock.isToggle());
             stm.setInt(2, id);

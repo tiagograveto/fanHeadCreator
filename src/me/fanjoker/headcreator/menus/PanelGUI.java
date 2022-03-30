@@ -27,6 +27,7 @@ public class PanelGUI implements Listener {
 
         new ScrollerInventory(items, "Painel HeadCreator", p);
     }
+
     public List<ItemStack> getItemStackList() {
         List<ItemStack> items = new ArrayList<>();
 

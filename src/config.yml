@@ -8,7 +8,7 @@ Mysql:
 Config:
   USE_HOLOGRAMS: true # Requer o plugin HolographicDisplays
   DISABLE_HOLOGRAM: true # Isso desabilitará o holograma caso a cabeça esteja desativada
-  OPEN_WITH_SHIFT: true # Isso abrirá o menu da cabeça quando o jogador com a permissão "hcreator.admin" clicar com o shift no bloco
+  OPEN_WITH_SHIFT: true # Isso abrirá o menu da cabeça quando o jogador com a permissão de admin clicar com o shift no bloco
   PERMISSION: "hcreator.admin"
 HeadCreator:
   lixo:

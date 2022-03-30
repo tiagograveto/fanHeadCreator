@@ -7,6 +7,7 @@ import me.fanjoker.headcreator.objects.HCBlock;
 import me.fanjoker.headcreator.config.Messages;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -25,6 +26,7 @@ public class BreakEvent implements Listener {
     public void onBreak(BlockBreakEvent e) {
 
         Block b = e.getBlock();
+        Player p = e.getPlayer();
 
         if (b.getType() != Material.SKULL) return;
         if (!e.getPlayer().hasPermission(Config.PERMISSION)) return;
@@ -33,8 +35,16 @@ public class BreakEvent implements Listener {
 
         if (hcBlock == null) return;
 
+        BreakHeadEvent event = new BreakHeadEvent(p, hcBlock);
+        main.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            e.setCancelled(true);
+            return;
+        }
+
+
         main.getManager().deleteHead(hcBlock.getLoc());
-        main.getServer().getPluginManager().callEvent(new BreakHeadEvent(e.getPlayer(), hcBlock));
         e.getPlayer().sendMessage(Messages.BREAK_HEAD);
     }
 }

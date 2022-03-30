@@ -79,7 +79,7 @@ public class Main extends JavaPlugin {
 
     private void registerManagers() {
         instance = this;
-        constructor = new HCConstructor(this);
+        constructor = new HCConstructor();
         settings = new HCSettings(this);
         manager = new HCManager(this);
         connection = new HCConnection(this);

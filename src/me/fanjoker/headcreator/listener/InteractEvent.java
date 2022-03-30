@@ -1,6 +1,7 @@
 package me.fanjoker.headcreator.listener;
 
 import me.fanjoker.headcreator.Main;
+import me.fanjoker.headcreator.api.BreakHeadEvent;
 import me.fanjoker.headcreator.api.InteractHeadEvent;
 import me.fanjoker.headcreator.config.Config;
 import me.fanjoker.headcreator.objects.HCBlock;
@@ -34,7 +35,13 @@ public class InteractEvent implements Listener {
         HCBlock hcBlock = main.getConstructor().getByLocation(b.getLocation());
         if (hcBlock == null) return;
 
-        main.getServer().getPluginManager().callEvent(new InteractHeadEvent(p, hcBlock));
+        InteractHeadEvent event = new InteractHeadEvent(p, hcBlock);
+        main.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (p.isSneaking() && p.hasPermission(Config.PERMISSION) && Config.OPEN_WITH_SHIFT) {
             main.getInventories().getHeadGUI().open(p, main.getConstructor().getIdByLocation(hcBlock.getLoc()));

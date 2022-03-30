@@ -51,11 +51,12 @@ public class HCConfig {
     }
 
     public void executeCommands(Player p) {
-        List<String> lista = this.commands;
-        for(String str : lista) {
+
+        for(String str : this.commands) {
             if(str.startsWith("op:")) {
                 String string = str
                         .replace("op:", "")
+                        .replace("op: ", "")
                         .replace("%player%", p.getName());
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), string);
                 continue;
