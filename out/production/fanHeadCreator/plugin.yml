@@ -1,6 +1,6 @@
 name: fanHeadCreator
 main: me.fanjoker.headcreator.Main
-version: 2.1
+version: 2.2
 author: zFan
 commands:
   hcreator:
