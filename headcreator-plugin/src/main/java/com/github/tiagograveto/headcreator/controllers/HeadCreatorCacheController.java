@@ -95,10 +95,6 @@ public class HeadCreatorCacheController {
         return null;
     }
 
-    public boolean existsHeadConfigType(String type) {
-        return getHeadConfigType(type) != null;
-    }
-
     public HCConfig getHeadConfigType(String name) {
         System.out.println(cacheConfig);
         return cacheConfig.get(name);

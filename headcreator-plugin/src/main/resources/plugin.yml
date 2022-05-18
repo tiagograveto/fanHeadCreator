@@ -1,6 +1,6 @@
 name: fanHeadCreator
 main: com.github.tiagograveto.headcreator.Main
-version: 2.3
+version: 2.3.1
 author: zFan
 commands:
   hcreator:
