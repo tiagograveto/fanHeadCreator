@@ -1,0 +1,19 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    alias(libs.plugins.shadowjar)
+}
+
+dependencies {
+    compileOnly libs.spigot.api
+    compileOnly libs.holographicdisplays.api
+    compileOnly libs.mojang.authlib
+}
+
+tasks.withType(PublishToMavenRepository).configureEach {
+    it.enabled = true
+}
+
+jar {
+    destinationDirectory.set(file("C:\\Users\\tiago\\Desktop\\aa\\Test Plugins\\plugins"))
+}

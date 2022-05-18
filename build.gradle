@@ -1,0 +1,51 @@
+plugins {
+    id 'maven-publish'
+}
+
+group project.property('project.group')
+version project.property('project.version')
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    group project.property('project.group')
+    version project.property('project.version')
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.codemc.io/repository/maven-public/' }
+        maven { url 'https://libraries.minecraft.net/'}
+        maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://repo.citizensnpcs.co' }
+    }
+    dependencies {
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+        testAnnotationProcessor libs.lombok
+        testCompileOnly libs.lombok
+        testImplementation libs.junit.api
+        testRuntimeOnly libs.junit.engine
+        compileOnly libs.jetbrains.annotations
+        testCompileOnly libs.jetbrains.annotations
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    compileJava.options.encoding = "UTF-8"
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    configurations.all {
+        exclude group: 'com.comphenix.protocol', module: 'ProtocolLib'
+    }
+}

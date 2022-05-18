@@ -1,0 +1,38 @@
+[versions]
+lombok = "1.18.22"
+junit = "5.8.2"
+jetbrains-annotations = "23.0.0"
+spigotmc = '1.8.8-R0.1-SNAPSHOT'
+holographicdisplays = '2.4.9'
+authlib = '1.5.21'
+
+[libraries.lombok]
+module = "org.projectlombok:lombok"
+version.ref = "lombok"
+
+[libraries.junit-api]
+module = "org.junit.jupiter:junit-jupiter-api"
+version.ref = "junit"
+
+[libraries.junit-engine]
+module = "org.junit.jupiter:junit-jupiter-engine"
+version.ref = "junit"
+
+[libraries.jetbrains-annotations]
+module = "org.jetbrains:annotations"
+version.ref = "jetbrains-annotations"
+
+[libraries.spigot-api]
+module = "org.spigotmc:spigot-api"
+version.ref = "spigotmc"
+
+[libraries.holographicdisplays-api]
+module = "com.gmail.filoghost.holographicdisplays:holographicdisplays-api"
+version.ref = "holographicdisplays"
+
+[libraries.mojang-authlib]
+module = "com.mojang:authlib"
+version = "1.5.21"
+
+[plugins]
+shadowjar = { id = "com.github.johnrengelman.shadow", version = "7.1.2" }
